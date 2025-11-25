@@ -4,6 +4,8 @@ import dataclasses
 import enum
 import math
 
+TARGET_PLANET_NAME: str = "Target"
+
 @dataclasses.dataclass
 class Point:
     """ Store a point in 2D space """

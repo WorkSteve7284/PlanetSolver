@@ -22,6 +22,9 @@ class Resources:
     max_o2: float = MAX_O2
     max_fuel: float = MAX_FUEL
 
+    def __str__(self):
+        return f"Food: {self.max_food}, O2: {self.max_o2}, Fuel: {self.max_fuel}"
+
 class Ship:
     """ Represent a ship traveling through space! """
 
@@ -30,6 +33,7 @@ class Ship:
         self.pos = Point(0, 0)
         self.history: list[TravelPath] = []
         self.depth = 0
+        self.current_planet = 'Earth'
 
     def goto(self, galaxy_map: galaxy.Galaxy, target: str) -> Status:
         """ Move to a target planet. Returns success status """
@@ -84,7 +88,7 @@ class Ship:
         # speed^2 < current fuel / (distance * K_F)
         # speed < sqrt( current fuel / (distance * K_F) )
 
-        max_speed = math.sqrt(self.resources.max_fuel / (dist * K_F))
+        max_speed = math.sqrt(self.resources.max_fuel / (dist * K_F)) if dist != 0 else 0
 
         if min_speed > max_speed:
             print("Resource Failure")
@@ -95,7 +99,7 @@ class Ship:
         # Set resource values to their best-case scenario values
         self.resources.max_food -= dist * K_L / max_speed
         self.resources.max_o2 -= dist * K_L / max_speed
-        self.resources.max_fuel = dist * K_F * min_speed**2
+        self.resources.max_fuel -= dist * K_F * min_speed**2
 
         # If this is a resupply planet, resupply
         match galaxy_map.planets[target].resupply:
@@ -109,5 +113,8 @@ class Ship:
 
         if self.depth > MAX_DEPTH:
             return Status.FAIL
+
+        self.history.append(TravelPath((self.current_planet, target), dist, min_speed, max_speed))
+        self.current_planet = target
 
         return Status.SUCCESS

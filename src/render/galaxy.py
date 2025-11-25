@@ -35,8 +35,6 @@ def init_galaxy(galaxy_map: galaxy.Galaxy) -> tk.Tk:
 def draw_galaxy(window: tk.Tk, galaxy_map: galaxy.Galaxy) -> tk.Canvas:
     """ Draw a galaxy to the screen """
 
-    print(window.winfo_height())
-
     canvas = tk.Canvas(
         window,
         width=window.winfo_width(),
@@ -61,14 +59,13 @@ def draw_galaxy(window: tk.Tk, galaxy_map: galaxy.Galaxy) -> tk.Canvas:
             case basic.Resupply.OXYGEN:
                 color = "blue"
 
-        print(f"Drawing planet at {draw.screen_pos(planet.pos)}")
         draw.circle(canvas, draw.screen_pos(planet.pos), 6, color=color)
 
     return canvas
 
 
 
-def draw_path(canvas: tk.Canvas, galaxy_map: galaxy.Galaxy, paths: list[basic.TravelPath]):
+def draw_path(canvas: tk.Canvas, galaxy_map: galaxy.Galaxy, paths: list[basic.TravelPath]) -> None:
     """ Draws a path on the screen from """
     for path in paths:
         draw.line(canvas,
