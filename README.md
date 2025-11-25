@@ -1,6 +1,4 @@
-Can be broken up into sub-challenges
-
-First: Read CSV (Python Standard Library)
-Notes: Is the header in the CSV file or not? Handle both possibilities
-
-Second: Find best route
+# PlanetSolver
+Submission for the 2026 PATSA Region 8 HS Coding challenge.
+2098-903
+Written in Python!

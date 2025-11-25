@@ -2,21 +2,13 @@
 
 import math
 
-import galaxy
-import ship
+import src.galaxy as galaxy
+import src.ship as ship
 
 def find_path(galaxy_map: galaxy.Galaxy) -> ship.Ship | None:
     """ Returns best ship """
 
-    # Find all possible paths
-
-    # starting at earth, going to target planet
-
-    # earth -> planet1 -> planet2 -> planet3 -> planet4, etc -> target
-    # path of length (0,n], where n = number of planets + 1
-    # Or, range(n + 1) with n = number of planets
-    # So: (0, n+1]!
-
+    # Find number of possible paths
 
     possible_planets = len(galaxy_map.planets) - len(galaxy_map.hostile) - 1
 

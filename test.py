@@ -1,15 +1,14 @@
 """ Testing script for PlanetSolver """
 import pathlib
-import galaxy
-import renderer
-import pathfinder
 
-test_galaxy = galaxy.Galaxy(pathlib.Path('ExampleMap.csv'))
+from src import render, galaxy, pathfinder
+
+test_galaxy = galaxy.Galaxy(pathlib.Path('Maps/ExampleMap.csv'))
 
 pathfinder.find_path(test_galaxy)
 
-window, canvas = renderer.draw_galaxy(test_galaxy)
+window = render.galaxy.init_galaxy(test_galaxy)
 
-#renderer.draw_line(canvas, renderer.screen_pos(basic.Point(0,0)), renderer.screen_pos(test_galaxy.planets["Target"].pos))
+canvas = render.galaxy.draw_galaxy(window, test_galaxy)
 
-renderer.draw(window)
+render.draw.draw_window(window)

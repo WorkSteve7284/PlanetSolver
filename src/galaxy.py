@@ -3,7 +3,7 @@
 import pathlib
 import csv
 import dataclasses
-import basic
+import src.basic as basic
 
 @dataclasses.dataclass
 class Planet:

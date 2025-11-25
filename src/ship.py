@@ -3,8 +3,8 @@
 import dataclasses
 import math
 
-from basic import *
-import galaxy
+from src.basic import *
+from src import galaxy
 
 MAX_FOOD = 2000
 MAX_O2 = 2000
