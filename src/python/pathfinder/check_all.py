@@ -5,7 +5,7 @@ import copy
 
 from src import ship, galaxy, basic
 
-def find_path(galaxy_map: galaxy.Galaxy) -> ship.Ship:
+def find_path(galaxy_map: galaxy.Galaxy):
     """ Returns best ship """
 
     # Find number of possible paths
@@ -27,7 +27,7 @@ def find_path(galaxy_map: galaxy.Galaxy) -> ship.Ship:
 
     print(f"There are {len(successful_ships)} potentially possible paths")
 
-    return ship.Ship()
+    return successful_ships
 
 def send_to_all(ship_to_move: ship.Ship, galaxy_map: galaxy.Galaxy) -> tuple[list[ship.Ship], list[ship.Ship]]:
     """ Sends a ship to all places it hasn't been before"""
