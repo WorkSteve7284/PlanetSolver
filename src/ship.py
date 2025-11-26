@@ -61,7 +61,7 @@ class Ship:
 
         # List comprehension for that
         if not [0 for p in galaxy_map.hostile if abs(-1 * slope * p.pos.x + p.pos.y + c) / denom > p.radius]:
-            print("Intersected with a hostile zone")
+            #print("Intersected with a hostile zone")
             return Status.FAIL
 
 
@@ -91,7 +91,7 @@ class Ship:
         max_speed = math.sqrt(self.resources.max_fuel / (dist * K_F)) if dist != 0 else 0
 
         if min_speed > max_speed:
-            print("Resource Failure")
+            #print("Resource Failure")
             return Status.FAIL
 
         self.pos = galaxy_map.planets[target].pos

@@ -23,6 +23,7 @@ def find_path(galaxy_map: galaxy.Galaxy) -> ship.Ship:
     while traveling_ships:
         traveling_ships, successful = merge([send_to_all(s, galaxy_map) for s in traveling_ships])
         successful_ships.extend(successful)
+        print(len(traveling_ships))
 
     print(f"There are {len(successful_ships)} potentially possible paths")
 
@@ -30,11 +31,10 @@ def find_path(galaxy_map: galaxy.Galaxy) -> ship.Ship:
 
 def send_to_all(ship_to_move: ship.Ship, galaxy_map: galaxy.Galaxy) -> tuple[list[ship.Ship], list[ship.Ship]]:
     """ Sends a ship to all places it hasn't been before"""
-    print("going")
     ships_out: list[ship.Ship] = []
     successful_ships: list[ship.Ship] = []
 
-    past_places: set[str] = set(['Earth'])
+    past_places: set[str] = set()
     for path in ship_to_move.history:
         past_places.add(path.planets[0])
         past_places.add(path.planets[1])
@@ -47,7 +47,6 @@ def send_to_all(ship_to_move: ship.Ship, galaxy_map: galaxy.Galaxy) -> tuple[lis
                     successful_ships.append(temp_ship)
                     continue
                 ships_out.append(temp_ship)
-
 
     return ships_out, successful_ships
 
