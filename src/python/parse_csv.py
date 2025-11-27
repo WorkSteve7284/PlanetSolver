@@ -7,6 +7,7 @@ import planetsolver_cxx as ps
 def parse(csv_path: str) -> ps.GalaxyMap:
 
     galaxy_map = ps.GalaxyMap()
+    print(type(galaxy_map))
 
     with open(csv_path, mode='r', encoding='utf-8') as csv_file:
 
@@ -35,3 +36,5 @@ def parse(csv_path: str) -> ps.GalaxyMap:
                     row[3].casefold() == 'hostile'
                 )
             )
+
+    return galaxy_map

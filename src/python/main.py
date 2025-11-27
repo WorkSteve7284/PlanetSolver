@@ -3,6 +3,7 @@
 import time
 
 import parse_csv
+import debug_output
 
 start_time = time.time()
 
@@ -13,6 +14,10 @@ map_location = '../../Maps/ExampleMap.csv'
 # Run code
 
 galaxy_map = parse_csv.parse(map_location)
+
+print(type(galaxy_map))
+
+debug_output.print_galaxy(galaxy_map)
 
 end_time = time.time()
 

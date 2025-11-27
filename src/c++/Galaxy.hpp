@@ -22,6 +22,7 @@ struct Planet {
     double hostile_radius = 0;
     bool is_hostile = false;
 
+    // Constructors
     Planet() = default;
 
     Planet(const std::string& planet_name, const Vector2& pos, ResupplyType resupply_type, double radius)
@@ -38,13 +39,12 @@ struct GalaxyMap {
 
     std::vector<Planet> planets;
 
-    GalaxyMap() = default;
+    GalaxyMap() = default; // No constructor
 
     void add_planet(const Planet& planet) {
         planets.push_back(planet);
 
         index_to_name[planets.size() - 1] = planet.name;
         name_to_index[planet.name] = planets.size() - 1;
-
     }
 };

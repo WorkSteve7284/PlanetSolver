@@ -4,4 +4,4 @@
 *build
 *.cache
 *.pyd
-*compile_commands.json
+src/c++/compile_commands.json

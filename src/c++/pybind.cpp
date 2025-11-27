@@ -1,13 +1,20 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
+#include <pybind11/detail/common.h>
+
+#include <string>
 
 #include "Galaxy.hpp"
+#include "Path.hpp"
+#include "Resources.hpp"
 #include "Vector.hpp"
-#include "pybind11/detail/common.h"
+
 
 namespace py = pybind11;
 
+
+// Bindings for pybind11 (python interface)
 PYBIND11_MODULE(planetsolver_cxx, m) {
     m.doc() = "C++ Interface for PlanetSolver"; // optional module docstring
 
@@ -25,6 +32,7 @@ PYBIND11_MODULE(planetsolver_cxx, m) {
         .def(py::self - py::self)
         .def(py::self * double())
         .def(py::self / double())
+        .def("__str__", &Vector2::operator std::string)
         .def_readwrite("x", &Vector2::x)
         .def_readwrite("y", &Vector2::y);
 
@@ -52,4 +60,14 @@ PYBIND11_MODULE(planetsolver_cxx, m) {
         .def_readwrite("index_to_name", &GalaxyMap::index_to_name)
         .def_readwrite("name_to_index", &GalaxyMap::name_to_index)
         .def_readwrite("planets", &GalaxyMap::planets);
+
+    py::class_<Resources>(m, "Resources")
+        .def_readwrite("food", &Resources::food)
+        .def_readwrite("oxygen", &Resources::oxygen)
+        .def_readwrite("fuel", &Resources::fuel);
+
+    py::class_<PathSegment>(m, "PathSegment")
+        .def_readwrite("start", &PathSegment::start)
+        .def_readwrite("end", &PathSegment::end)
+        .def_readwrite("speed", &PathSegment::speed);
 }

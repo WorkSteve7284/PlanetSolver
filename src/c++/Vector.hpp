@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#include <string>
+#include <format>
 
 /* Implement a Vector type (2d) */
 
@@ -75,6 +77,13 @@ struct Vector2 {
         return *this;
     }
 
+    static double dot(const Vector2& a, const Vector2& b) {
+        return a.x * b.x + a.y * b.y;
+    }
+
+    operator std::string() {
+        return std::format("({}, {})", x, y);
+    }
 };
 
 inline Vector2 operator*(double scalar, const Vector2& vec) noexcept {
