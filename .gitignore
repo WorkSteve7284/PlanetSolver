@@ -1,8 +1,7 @@
 *__pycache__
 *.vscode
-
 *.vs
-
 *build
-
 *.cache
+*.pyd
+*compile_commands.json

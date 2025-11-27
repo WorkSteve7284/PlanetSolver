@@ -25,3 +25,5 @@ So, now into more specifics&mdash;exactly how our approach goes. We can split th
 6. Report our solution (Python)
 
 This approach isn't final, of course. It might change as we change our algorithm.
+
+## Compilation Instructions

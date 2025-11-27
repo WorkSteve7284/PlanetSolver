@@ -37,4 +37,14 @@ struct GalaxyMap {
     std::map<std::string, std::size_t> name_to_index;
 
     std::vector<Planet> planets;
+
+    GalaxyMap() = default;
+
+    void add_planet(const Planet& planet) {
+        planets.push_back(planet);
+
+        index_to_name[planets.size() - 1] = planet.name;
+        name_to_index[planet.name] = planets.size() - 1;
+
+    }
 };
