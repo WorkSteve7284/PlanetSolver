@@ -18,7 +18,7 @@ So, now into more specifics&mdash;exactly how our approach goes. We can split th
 2. Pass that to C++ (pybind11)
 3. Find best possible path (C++)
     * Find all possible paths
-    * Calculate score for each path
+    * Calculate best score for each path
     * Find best path
 4. Find score for said path (C++)
 5. Send solution back to Python (pybind11)
@@ -26,4 +26,47 @@ So, now into more specifics&mdash;exactly how our approach goes. We can split th
 
 This approach isn't final, of course. It might change as we change our algorithm.
 
+## Running
+
+Running this requires Python. To run it, simply `cd` into the directory in which `main.py` is, and run `python main.py`.
+
+### Options:
+
+- `nogui`: Does not render the galaxy & final path
+- `target=<path>`: Skip the path selection screen, and start immediately. Does not check for the existence of the file, so typoes may crash the program.
+
+
 ## Compilation Instructions
+
+Compiling this requires Git, CMake, a C++20 compiler, a build system (E.G. Visual Studio or Ninja).
+
+> This codebase uses several features from C++ 20. As of writing this, the latest versions of all major compilers (GCC, Clang, MSVC, Xcode) should support it.
+
+> The following instructions use Powershell
+
+1. Clone the git repo
+
+```
+git clone https://github.com/WorkSteve7284/PlanetSolver.git
+```
+
+2. Update the submodules (pybind11)
+
+```
+cd PlanetSolver
+git submodule update --init
+```
+
+3. Run CMake & compile (example uses Ninja, but removing the `-G Ninja` allows CMake to select the generator itself. This shouldn't matter, I just prefer Ninja)
+
+```
+cd c++
+cmake -B build -G Ninja
+cmake --build build
+```
+
+4. Copy the compiled C++ file into
+
+```
+copy ".\build\planetsolver_cxx.pyd" "..\python\"
+```

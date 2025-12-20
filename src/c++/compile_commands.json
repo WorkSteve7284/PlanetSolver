@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/Sam/source/repos/PlanetSolver/src/c++/build",
-  "command": "C:\\Users\\Sam\\tools\\clang+llvm-21.1.3-x86_64-pc-windows-msvc\\bin\\clang++.exe -Dplanetsolver_cxx_EXPORTS -IC:/Users/Sam/source/repos/PlanetSolver/src/c++/../../extern/pybind11/include -I\"C:/Program Files/WindowsApps/PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0/Include\" -O0 -std=gnu++20 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -g -Xclang -gcodeview @CMakeFiles\\planetsolver_cxx.dir\\pybind.cpp.obj.modmap -o CMakeFiles\\planetsolver_cxx.dir\\pybind.cpp.obj -c C:\\Users\\Sam\\source\\repos\\PlanetSolver\\src\\c++\\pybind.cpp",
-  "file": "C:/Users/Sam/source/repos/PlanetSolver/src/c++/pybind.cpp",
-  "output": "C:/Users/Sam/source/repos/PlanetSolver/src/c++/build/CMakeFiles/planetsolver_cxx.dir/pybind.cpp.obj"
-}
-]

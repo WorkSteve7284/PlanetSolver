@@ -1,19 +1,20 @@
 """ Parse CSV into a GalaxyMap """
 
 import csv
+import pathlib
 
-import planetsolver_cxx as ps
+from . import planetsolver as ps # type: ignore
 
-def parse(csv_path: str) -> ps.GalaxyMap:
-
-    galaxy_map = ps.GalaxyMap()
-    print(type(galaxy_map))
+def parse(csv_path: pathlib.Path) -> ps.GalaxyMap:
 
     with open(csv_path, mode='r', encoding='utf-8') as csv_file:
 
         reader = csv.reader(csv_file)
 
-        for i, row in enumerate(reader):
+        rows = list(reader)
+        galaxy_map = ps.GalaxyMap(len(rows))
+
+        for i, row in enumerate(rows):
             if i == 0 and (row[1].casefold() == 'x' or row[2].casefold() == 'x'):
                 continue
 
