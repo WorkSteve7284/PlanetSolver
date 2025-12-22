@@ -5,15 +5,13 @@
 #include <vector>
 namespace Algorithms {
 
+
+
     struct Graph {
 
-        std::vector<std::vector<planet_index>> graph;
+        std::vector<std::vector<planet_index>> possible_graph;
 
         Graph(const GalaxyMap&);
-
-        const std::vector<planet_index>& operator[](planet_index) const;
-
-        void print() const;
     };
 
 }

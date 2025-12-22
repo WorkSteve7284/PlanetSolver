@@ -13,10 +13,10 @@ enum class ResupplyType : unsigned char {
 };
 
 struct Planet {
+    std::string name;
 
     Vector2 pos;
 
-    std::string name;
     planet_index index = 0;
 
     ResupplyType resupply;

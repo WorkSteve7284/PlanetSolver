@@ -8,28 +8,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Allow clangd to be nice
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Add pybind11
-include_directories("${CMAKE_SOURCE_DIR}/../extern/pybind11/include")
+# Add include directory
 include_directories("${CMAKE_SOURCE_DIR}")
 
-# Add library
-add_library(planetsolver MODULE pybind.cpp)
+# Add pybind11
+add_subdirectory("${CMAKE_SOURCE_DIR}/../extern/pybind11" "${CMAKE_SOURCE_DIR}/build/pybind11")
 
-# Compile to correct format
-set_target_properties(planetsolver PROPERTIES PREFIX "" SUFFIX ".pyd")
-
-# Add required Python stuff
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
-target_include_directories(planetsolver PRIVATE ${Python_INCLUDE_DIRS})
-target_link_libraries(planetsolver PRIVATE ${Python_LIBRARIES})
-
-# Add other files
-
-target_sources(planetsolver
-    PUBLIC
-        src/Vector.cpp
-        src/Galaxy.cpp
-        src/Path.cpp
-        Algorithms/AStar.cpp
-        Algorithms/Valid.cpp
+# Add source files
+set(SOURCES
+    pybind.cpp
+    src/Galaxy.cpp
+    src/Path.cpp
+    src/Vector.cpp
+    Algorithms/AStar.cpp
+    Algorithms/Valid.cpp
 )
+
+# Add pybind
+pybind11_add_module(planetsolver ${SOURCES})
+
+# Add compile flags
+target_compile_options(planetsolver PRIVATE -Wall -O3)

@@ -2,6 +2,7 @@
 
 #include <array>
 #include <cstddef>
+#include <cmath>
 
 using planet_index = int;
 using precision = double;
@@ -9,7 +10,7 @@ using precision = double;
 constexpr precision cube_root(precision n) {
     precision x = 1.0;
 
-    for (std::size_t i = 0; i < 7; i++) {
+    for (std::size_t i = 0; i < 10; i++) {
         x = (2 * x + n / (x*x)) / 3;
     }
 
@@ -23,8 +24,8 @@ constexpr precision MAX_FUEL = 3000;
 constexpr precision K_L = 0.3;
 constexpr precision K_F = 0.15;
 
-constexpr std::array<precision, 3> optimal_speeds = {
-    cube_root((2*K_L + 1) / (2 * K_F)), // All count
-    cube_root( (K_L + 1) / (2 * K_F)), // one count
-    cube_root( (1) / (2 * K_F)) // None count
+const std::array<precision, 3> optimal_speeds = {
+    std::cbrt((2*K_L + 1) / (2 * K_F)), // All count
+    std::cbrt( (K_L + 1) / (2 * K_F)), // one count
+    std::cbrt( (1) / (2 * K_F)) // None count
 };

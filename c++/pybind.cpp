@@ -32,7 +32,6 @@ PYBIND11_MODULE(planetsolver, m) {
         .def(py::self == py::self)
         .def(py::self != py::self);
 
-    m.def("find_best_path", &Algorithms::best_path);
 
     py::class_<Planet>(m, "Planet")
         .def(py::init<std::string, Vector2, ResupplyType, precision>())
@@ -61,4 +60,7 @@ PYBIND11_MODULE(planetsolver, m) {
         .def_readwrite("start", &Paths::Segment::start)
         .def_readwrite("end", &Paths::Segment::end)
         .def_readwrite("speed", &Paths::Segment::speed);
+
+    m.def("find_best_path", &Algorithms::best_path);
+
 }

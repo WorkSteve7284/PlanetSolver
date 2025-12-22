@@ -39,12 +39,13 @@ def draw_galaxy(galaxy_map: ps.GalaxyMap) -> tuple[tk.Tk, draw.ResizingCanvas]:
     canvas = draw.ResizingCanvas(window, width=width, height=height, background="#000000", bd=0, highlightthickness=0)
     canvas.pack(fill=tk.BOTH, expand=tk.YES)
 
-    # Draw planets
+    # Draw hostile radiuses
     for planet in galaxy_map.planets:
-
-        # Hostile planets
         if planet.is_hostile:
             draw.circle(canvas, draw.screen(planet.pos), 5 * planet.hostile_radius, color="#CC0000")
+
+    # Draw planets
+    for planet in galaxy_map.planets:
 
         color = "orange"
         # Draw regular planets

@@ -2,71 +2,67 @@
 
 Submission for the 2026 PATSA Region 8 HS Coding challenge.
 
-Team #: 2098-903
+Team `2098-903`
 
-Written in Python & C++!
+Team Members: `2098-068`, `2098-072`
+
+Written in Python & C++
 
 ## Our approach
 
-We can get a lot of points (up to 50!) for having the fastest & best algorithm. Because of that, we can't just use the first path that we come up with; we have to make the best possible algorithm for finding the best possible path. At the time of writing this, we haven't finalized our approach, but here's our current thought process:
+We can get a lot of points (up to 50!) for having the fastest & best algorithm. Because of that, we can't just use the first path that we come up with; we have to make the best possible algorithm for finding the best possible path.
 
-We have to balance correctness with speed. Because we don't have a good algorithm yet, we'll focus on speed. The two of us have fairly different experience with coding, with me (the one writing this) having decent experience in C++ & Python, and the other team member having experience in Python. Python's standard library is much more powerful for some things, while C++ is much faster than Python. Because of that, we'll use Python to first parse the CSV & convert it into a usable format, and to report the results to the judges. We'll then use C++ to actually find our answer as fast as possible. To join the two, we'll use [pybind11](https://pybind11.readthedocs.io/en/latest/).
+We managed to use a little calculus to find that, to optimize score, there are exactly 3 unique speeds we must travel at. For a segment between the end and any resupply (as in, there are no resupplies between that segment and the end), that number is $\sqrt[3]{\frac{2k_l+1}{2k_f}}\approx 1.75$. For a segment with exactly one type of resupply between it and the end, that number is $\sqrt[3]{\frac{k_l+1}{2k_f}}\approx 1.63$. Finally, for a segment with resupply planets of both types between it and the end, that number is $\sqrt[3]{\frac{1}{2k_f}}\approx 1.49$.
 
-So, now into more specifics&mdash;exactly how our approach goes. We can split the problem into several sub-problems, some of which are already solved:
+Now that we can know the speeds a given path is traveled at, we only need to select the path. We realized that the commonly-used `A*` algorithm would probably be the best, but because the cost of a path is dependant on its future state, it wouldn't be accurate, and would just become a brute-force algorithm. Most other algorithms have this problem; since the score depends on the future state, we can't know it until the end. Then, we came to a realization: we can traverse the path backwards! The cost of a segment is symmetrical (doesn't change if going forwards or backwards), and going backwards turns those unknowable future states into very knowable past states.
 
-1. Parse CSV into a data structure (Python)
-2. Pass that to C++ (pybind11)
-3. Find best possible path (C++)
-    * Find all possible paths
-    * Calculate best score for each path
-    * Find best path
-4. Find score for said path (C++)
-5. Send solution back to Python (pybind11)
-6. Report our solution (Python)
+The next issue with the algorithm was selecting a heuristic function. Setting it to 0 converts the `A*` algorithm into `Dijkstra's Algorithm`, which is still correct but may be slightly slower. The heuristic is just the lower bound for the score of a segment, which can be found by using the cost of a segment whose oxygen and food costs don't count. Then, the only thing left is to report the path!
 
-This approach isn't final, of course. It might change as we change our algorithm.
+We report the path data (speed & order) to the command line, as it is the fastest method we found. However, we also made a nicer-looking GUI using `TKinter`, for ease of verification. It renders planets, their resupply type (color of the planet), and hostile zones, as well as the names of all planets, and the path we used.
 
 ## Running
 
-Running this requires Python. To run it, simply `cd` into the directory in which `main.py` is, and run `python main.py`.
+To run this, download the `.pyd` file and move it into the `python` directory. We don't have access to a Mac or device running Linux, so we only have the windows version available. If you're running MacOS or Linux, you will have to compile it yourself.
 
-### Options:
+### CLI Options:
 
-- `nogui`: Does not render the galaxy & final path
-- `target=<path>`: Skip the path selection screen, and start immediately. Does not check for the existence of the file, so typoes may crash the program.
+- `nogui`: Does not render the galaxy & final path using `TKinter`.
+- `map=<path>`: Skip the path selection screen. Does not check for the existence of the file, so typoes may crash the program.
+- `target=<planet name>`: Set the target planet.
+- `from=<planet name>`: Set the starting planet.
 
 
 ## Compilation Instructions
 
-Compiling this requires Git, CMake, a C++20 compiler, a build system (E.G. Visual Studio or Ninja).
-
-> This codebase uses several features from C++ 20. As of writing this, the latest versions of all major compilers (GCC, Clang, MSVC, Xcode) should support it.
+Compiling this requires Git, CMake, a C++ compiler, and a build system (E.G. Visual Studio or Ninja).
 
 > The following instructions use Powershell
 
 1. Clone the git repo
 
-```
+```shell
 git clone https://github.com/WorkSteve7284/PlanetSolver.git
 ```
 
 2. Update the submodules (pybind11)
 
-```
+```shell
 cd PlanetSolver
 git submodule update --init
 ```
 
-3. Run CMake & compile (example uses Ninja, but removing the `-G Ninja` allows CMake to select the generator itself. This shouldn't matter, I just prefer Ninja)
+3. Run CMake & compile
 
-```
+> `compile.bat` uses Ninja because it can generate a `compile_commants.json`, which is only nessecary for my IDE.
+
+```shell
 cd c++
-cmake -B build -G Ninja
+cmake -B build
 cmake --build build
 ```
 
-4. Copy the compiled C++ file into
+4. Copy the compiled C++ file into the python directory.
 
-```
+```shell
 copy ".\build\planetsolver_cxx.pyd" "..\python\"
 ```

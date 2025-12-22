@@ -27,6 +27,10 @@ def print_path(path: list[ps.paths.Segment], galaxy_map: ps.GalaxyMap, map_name:
         o2 -= cost_food
         fuel -= cost_fuel
 
+        #if food <= 0 or o2 <= 0 or fuel <= 0:
+            #print("Failed!")
+            #exit()
+
         time += t
 
         match galaxy_map.planets[segment.end]:
