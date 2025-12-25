@@ -66,5 +66,5 @@ cmake --build build
 4. Copy the compiled C++ file into the python directory.
 
 ```shell
-copy ".\build\planetsolver_cxx.pyd" "..\python\"
+copy ".\build\planetsolver.pyd" "..\python\"
 ```
