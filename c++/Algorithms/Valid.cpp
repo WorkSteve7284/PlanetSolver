@@ -10,18 +10,18 @@ Algorithms::Graph::Graph(const GalaxyMap& map) {
     for (planet_index i = 0; i < map.planets.size(); i++) {
 
         // Ensure planet isn't hostile
-        if (map[i].is_hostile)
+        if (map.planets[i].is_hostile)
             continue;
 
-        const Vector2& A = map[i].pos;
+        const Vector2& A = map.planets[i].pos;
 
         for (planet_index j = i+1; j < map.planets.size(); j++) {
 
             // Also ensure planet isn't hostile
-            if (map[j].is_hostile)
+            if (map.planets[j].is_hostile)
                 continue;
 
-            const Vector2& B = map[j].pos;
+            const Vector2& B = map.planets[j].pos;
             bool intersects = false;
 
             // Check if the segment intersects with a hostile zone

@@ -73,7 +73,7 @@ path = ps.find_best_path(from_, target, galaxy_map)
 #path = debug.list_to_path(['Persephone', 'Hestia', 'Aegis', 'Tethys'], galaxy_map)
 
 # Print Results
-print(f"Used map {map_path}")
+print(f"Used map {map_path}\n")
 output.print_path(path, galaxy_map, map_path.stem)
 
 end_time = time.perf_counter()

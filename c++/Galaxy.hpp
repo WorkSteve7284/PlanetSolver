@@ -21,10 +21,9 @@ struct Planet {
 
     ResupplyType resupply;
 
-    bool is_hostile;
     precision hostile_radius;
+    bool is_hostile;
 
-    Planet(std::string, Vector2, ResupplyType, precision);
     Planet(std::string, Vector2, ResupplyType, precision, bool);
 };
 
@@ -34,8 +33,6 @@ struct GalaxyMap {
     std::vector<Planet*> hostile;
 
     GalaxyMap(planet_index);
-
-    const Planet& operator[](planet_index) const;
 
     planet_index index_from_name(const std::string&) const;
 

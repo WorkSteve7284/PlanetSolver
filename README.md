@@ -22,7 +22,9 @@ We report the path data (speed & order) to the command line, as it is the fastes
 
 ## Running
 
-To run this, download the `.pyd` file and move it into the `python` directory. We don't have access to a Mac or device running Linux, so we only have the windows version available. If you're running MacOS or Linux, you will have to compile it yourself.
+To run this, download the `.zip` archive from GitHub releases, unzip it, and run `main.py` using Python.
+
+> We don't have access to a machine running Linux or MacOS, so we only have a Windows version available. If you're running another OS, you will have to compile it yourself.
 
 ### CLI Options:
 

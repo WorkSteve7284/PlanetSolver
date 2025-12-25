@@ -14,20 +14,20 @@ template <typename T> using min_queue = std::priority_queue<T, std::vector<T>, C
 
 precision cost_all(planet_index a, planet_index b, const GalaxyMap& map) {
     const precision speed = optimal_speeds[0];
-    const precision distance = (map[a].pos - map[b].pos).magnitude();
+    const precision distance = (map.planets[a].pos - map.planets[b].pos).magnitude();
     return distance / speed + distance * (K_F * speed*speed) - 2*K_L*(distance / speed);
 }
 
 precision cost_one(planet_index a, planet_index b, const GalaxyMap& map) {
     const precision speed = optimal_speeds[1];
-    const precision distance = (map[a].pos - map[b].pos).magnitude();
+    const precision distance = (map.planets[a].pos - map.planets[b].pos).magnitude();
     return distance / speed + distance * (K_F * speed*speed) - K_L*(distance / speed);
 
 }
 
 precision cost_none(planet_index a, planet_index b, const GalaxyMap& map) {
     const precision speed = optimal_speeds[2];
-    const precision distance = (map[a].pos - map[b].pos).magnitude();
+    const precision distance = (map.planets[a].pos - map.planets[b].pos).magnitude();
     return distance / speed + distance * (K_F * speed*speed);
 
 }
@@ -101,7 +101,7 @@ std::vector<Paths::Segment> Algorithms::a_star(planet_index start, planet_index 
     nodes.resize(map.planets.size());
 
     for (planet_index i = 0; i < map.planets.size(); i++) {
-        if (map[i].is_hostile)
+        if (map.planets[i].is_hostile)
             continue;
         nodes[i] = {Node(i), Node(i), Node(i), Node(i)};
     }

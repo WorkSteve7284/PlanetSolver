@@ -1,4 +1,4 @@
-#include "Algorithm.hpp"
+#include "Algorithms/AStar.hpp"
 #include "Galaxy.hpp"
 #include "Path.hpp"
 #include "Vector.hpp"
@@ -24,17 +24,12 @@ PYBIND11_MODULE(planetsolver, m) {
         .def(py::self + py::self)
         .def(py::self - py::self)
         .def(py::self * 1.0)
-        .def(py::self / 1.0)
         .def(py::self += py::self)
         .def(py::self -= py::self)
-        .def(py::self *= 1.0)
-        .def(py::self /= 1.0)
         .def(py::self == py::self)
         .def(py::self != py::self);
 
-
     py::class_<Planet>(m, "Planet")
-        .def(py::init<std::string, Vector2, ResupplyType, precision>())
         .def(py::init<std::string, Vector2, ResupplyType, precision, bool>())
         .def_readwrite("pos", &Planet::pos)
         .def_readwrite("name", &Planet::name)
@@ -61,6 +56,6 @@ PYBIND11_MODULE(planetsolver, m) {
         .def_readwrite("end", &Paths::Segment::end)
         .def_readwrite("speed", &Paths::Segment::speed);
 
-    m.def("find_best_path", &Algorithms::best_path);
+    m.def("find_best_path", &Algorithms::a_star);
 
 }
