@@ -22,16 +22,20 @@ We report the path data (speed & order) to the command line, as it is the fastes
 
 ## Running
 
-To run this, download the `.zip` archive from GitHub releases, unzip it, and run `main.py` using Python.
+To run this, download the `.zip` archive from GitHub releases, unzip it, and run `main.py` using Python. Then, follow the instructions given in the command line.
 
 > We don't have access to a machine running Linux or MacOS, so we only have a Windows version available. If you're running another OS, you will have to compile it yourself.
 
 ### CLI Options:
 
+Add these to the end of your python command to use them.
+
+> Your command would look like this: `python main.py map=Maps/ExampleMap.csv target=Target start=Earth`
+
 - `nogui`: Does not render the galaxy & final path using `TKinter`.
 - `map=<path>`: Skip the path selection screen. Does not check for the existence of the file, so typoes may crash the program.
 - `target=<planet name>`: Set the target planet.
-- `from=<planet name>`: Set the starting planet.
+- `start=<planet name>`: Set the starting planet.
 
 
 ## Compilation Instructions
