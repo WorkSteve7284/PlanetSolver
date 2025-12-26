@@ -6,3 +6,5 @@
 *.pyd
 c++/compile_commands.json
 python/planetsolver/*
+*.zip
+**CSV_FILE.csv

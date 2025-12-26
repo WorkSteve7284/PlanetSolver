@@ -69,8 +69,12 @@ if from_ == -1:
     exit()
 
 # Run algorithm
+
+work_time_start = time.perf_counter_ns()
+
 path = ps.find_best_path(from_, target, galaxy_map)
-#path = debug.list_to_path(['Persephone', 'Hestia', 'Aegis', 'Tethys'], galaxy_map)
+
+print(f"Worked for {time.perf_counter_ns() - work_time_start}s")
 
 # Print Results
 print(f"Used map {map_path}\n")

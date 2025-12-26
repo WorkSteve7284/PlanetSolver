@@ -4,6 +4,7 @@
 #include "Valid.hpp"
 #include "Vector.hpp"
 #include "definitions.hpp"
+#include <cstdint>
 #include <limits>
 #include <queue>
 #include <vector>
@@ -34,10 +35,10 @@ precision cost_none(planet_index a, planet_index b, const GalaxyMap& map) {
 
 inline precision heuristic(planet_index a, planet_index b, const GalaxyMap& map) {
     // Best-case scenario
-    //return cost_none(a, b, map);
+    return cost_none(a, b, map);
 
     // Set to 0 for Djisktra's algorithm
-    return 0;
+    //return 0;
 }
 
 struct Node {
@@ -51,24 +52,9 @@ struct Node {
 
     inline precision f_cost() const noexcept { return g_cost + h_cost; }
 
-    struct ResupplyState {
-        bool food = false, o2 = false;
+    std::uint8_t resupply;
 
-        bool operator==(const ResupplyState& other) const noexcept { return food == other.food && o2 == other.o2; }
-
-        operator unsigned char() const noexcept {
-            if (food && o2)
-                return 3;
-            else if (food)
-                return 2;
-            else if (o2)
-                return 1;
-            else
-                return 0;
-        }
-    } resupply;
-
-    enum class AStarState : unsigned char {
+    enum class AStarState : std::uint8_t {
         OPEN,
         CLOSED,
         UNKNOWN
@@ -101,13 +87,14 @@ std::vector<Paths::Segment> Algorithms::a_star(planet_index start, planet_index 
     nodes.resize(map.planets.size());
 
     for (planet_index i = 0; i < map.planets.size(); i++) {
-        if (map.planets[i].is_hostile)
+        if (map.planets[i].is_hostile) {
             continue;
+        }
         nodes[i] = {Node(i), Node(i), Node(i), Node(i)};
     }
 
     // Add starting place to open
-    open.emplace(&nodes.at(end).at(0));
+    open.emplace(&nodes[end][0]);
     open.top()->g_cost = 0;
     open.top()->state = Node::AStarState::OPEN;
 
@@ -138,23 +125,23 @@ std::vector<Paths::Segment> Algorithms::a_star(planet_index start, planet_index 
         if (current.index == start)
             break;
 
-        Node::ResupplyState target_state = current.resupply;
+        auto target_state = current.resupply;
 
-        if (!target_state.food && map.planets[current.index].resupply == ResupplyType::FOOD)
-            target_state.food = true;
-        if (!target_state.o2 && map.planets[current.index].resupply == ResupplyType::OXYGEN)
-            target_state.o2 = true;
+        if (!(target_state & 0b01) && map.planets[current.index].resupply == ResupplyType::FOOD)
+            target_state |= 0b01;
+        if (!(target_state & 0b10) && map.planets[current.index].resupply == ResupplyType::OXYGEN)
+            target_state |= 0b10;
 
-        for (auto& neighbor_index : graph.possible_graph.at(current.index)) {
-            auto& neighbor = nodes.at(neighbor_index).at(target_state);
+        for (auto& neighbor_index : graph.possible_graph[current.index]) {
+            auto& neighbor = nodes[neighbor_index][target_state];
 
             neighbor.resupply = target_state;
 
             precision g_cost = current.g_cost;
 
-            if (target_state.food && target_state.o2)
+            if ((target_state & 0b11) == 0b10)
                 g_cost += cost_none(current.index, neighbor_index, map);
-            else if (target_state.food || target_state.o2)
+            else if (target_state & 0b11)
                 g_cost += cost_one(current.index, neighbor_index, map);
             else
                 g_cost += cost_all(current.index, neighbor_index, map);
@@ -171,20 +158,20 @@ std::vector<Paths::Segment> Algorithms::a_star(planet_index start, planet_index 
 
     Node* pos = nullptr;
     precision g_cost = std::numeric_limits<precision>::infinity();
-    for (auto& node : nodes.at(start))
+    for (auto& node : nodes[start])
         if (node.g_cost < g_cost) {
             pos = &node;
             g_cost = node.g_cost;
         }
 
     std::vector<Paths::Segment> out;
-
+    out.reserve(map.planets.size() - map.hostile.size());
     while (pos->from) {
         precision speed;
 
-        if (pos->resupply.food && pos->resupply.o2)
+        if ((pos->resupply & 0b11) == 0b11)
             speed = optimal_speeds[2];
-        else if (pos->resupply.food || pos->resupply.o2)
+        else if (pos->resupply & 0b11)
             speed = optimal_speeds[1];
         else
             speed = optimal_speeds[0];

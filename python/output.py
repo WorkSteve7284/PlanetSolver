@@ -14,30 +14,33 @@ def print_path(path: list[ps.paths.Segment], galaxy_map: ps.GalaxyMap, map_name:
     o2 = MAX_FOOD_O2
     fuel = MAX_FUEL
     time = 0
+
+    output: list[str] = []
+
     for segment in path:
-        print(f"{galaxy_map.planets[segment.start].name}->{galaxy_map.planets[segment.end].name}, speed={segment.speed}")
 
-        d = (galaxy_map.planets[segment.start].pos - galaxy_map.planets[segment.end].pos).magnitude()
-        t  = d / segment.speed
+        start = galaxy_map.planets[segment.start]
+        end = galaxy_map.planets[segment.end]
+        speed = segment.speed
 
-        cost_food = K_L * t
-        cost_fuel = K_F * d * segment.speed**2
+        output.append(f"{start.name}->{end.name}, speed={speed}")
 
-        food -= cost_food
-        o2 -= cost_food
+        d = (start.pos - end.pos).magnitude()
+        t  = d / speed
+
+        cost_life = K_L * t
+        cost_fuel = K_F * d * speed*speed
+
+        food -= cost_life
+        o2 -= cost_life
         fuel -= cost_fuel
-
-        #if food <= 0 or o2 <= 0 or fuel <= 0:
-            #print("Failed!")
-            #exit()
 
         time += t
 
-        match galaxy_map.planets[segment.end]:
-            case ps.ResupplyType.FOOD:
-                food = 2000
-            case ps.ResupplyType.OXYGEN:
-                o2 = 2000
+        if end.resupply is ps.ResupplyType.FOOD:
+            food = MAX_FOOD_O2
+        elif end.resupply is ps.ResupplyType.OXYGEN:
+            o2 = MAX_FUEL
 
-    #print(f"\n{map_name}\n{resources}\nTime = {time}")
+    print('\n'.join(output))
     print(f"Score = {time - (o2 + food + fuel)}\n")

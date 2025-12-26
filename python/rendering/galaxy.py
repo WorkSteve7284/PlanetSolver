@@ -59,7 +59,7 @@ def draw_galaxy(galaxy_map: ps.GalaxyMap) -> tuple[tk.Tk, draw.ResizingCanvas]:
 
         draw.circle(canvas, draw.screen(planet.pos), 3, color=color)
 
-        draw.text(canvas, draw.screen(planet.pos) - ps.Vector2(0, 12), planet.name)
+        #draw.text(canvas, draw.screen(planet.pos) - ps.Vector2(0, 12), planet.name)
 
     canvas.tag_raise("text")
 
